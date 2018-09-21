@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#page {
+  width: 100vw;
+  height: 100vh;
+}
+
+#div1 {
+  float: left;
+  width: 20%;
+  height: 20%;
+  background-color: red;
+  margin: 0;
+  padding: 0;
+}
+
+#div2 {
+  margin-left: 20%;
+  background-color: blue;
+  height: 40%;
+  width: auto;
+}
