@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Object-oriented Javascript Inheritance</title>
+  </head>
+
+  <body>
+    <div>
+      <label for="jscode">Enter code:</label>
+      <input type="text" id="jscode">
+      <button>Submit code</button>
+    </div>
+    <p></p>
+
+    <script>
+      var input = document.querySelector('input');
+      var btn = document.querySelector('button');
+      var para = document.querySelector('p');
+
+      btn.onclick = function() {
+        var code = input.value;
+        para.textContent = eval(code);
+      }
+
+      function Person(first, last, age, gender, interests) {
+        this.name = {
+          first,
+          last
+        };
+        this.age = age;
+        this.gender = gender;
+        this.interests = interests;
+      };
+
+      Person.prototype.bio = function() {
+        //define a string and make it equal to the part of the bio we know will always be the same
+        var string = this.name.first + ' ' + this.name.last + ' is ' + this.age + ' years old. ';
+        //variable that will contain pronoun part of next sentence
+        var pronoun;
+
+        //check the value of gender and set pronoun to an appropriate value in each case
+        if(this.gender === 'male' || this.gender === 'Male' || this.gender === 'm' || this.gender === 'M') {
+          pronoun = 'He likes ';
+        } else if(this.gender === 'female' || this.gender === 'Female' || this.gender === 'f' || this.gender === 'F') {
+          pronoun = 'She likes ';
+        } else {
+          pronoun = 'They like ';
+        }
+
+        //add the pronoun string on to the end of the main string
+        string += pronoun;
+        // use another conditional to structure the last part of the
+               // second sentence depending on whether the number of interests
+               // is 1, 2, or 3
+               if(this.interests.length === 1) {
+                 string += this.interests[0] + '.';
+               } else if(this.interests.length === 2) {
+                 string += this.interests[0] + ' and ' + this.interests[1] + '.';
+               } else {
+                 // if there are more than 2 interests, we loop through them
+        // all, adding each one to the main string followed by a comma,
+        // except for the last one, which needs an and & a full stop
+        for(var i = 0; i < this.interests.length; i++) {
+          if(i === this.interests.length - 1) {
+            string += 'and ' + this.interests[i] + '.';
+          } else {
+            string += this.interests[i] + ', ';
+          }
+        }
+      }
+
+      // finally, with the string built, we alert() it
+        alert(string);
+      };
+      Person.prototype.greeting = function() {
+        alert('Hi! I\'m ' + this.name.first + '.');
+      };
+      Person.prototype.farewell = function() {
+        alert(this.name.first + ' has left the building. Bye for now!');
+      }
+
+      var person1 = new Person('Larry', 'Young', 32, 'male', ['music', 'programming', 'gaming', 'gardening']);
+
+      //let's create a new class of Person called bandMember
+
+      // bandMember constructor
+
+      function bandMember(first, last, age, gender, instrument, interests, influences) {
+        Person.call(this, first, last, age, gender, interests,);
+        this.instrument = instrument;
+      }
+
+      //at this point bandMember constroctor is it's own, not inherited. neither are any properties
+      bandMember.prototype = Object.create(Person.prototype);
+      bandMember.prototype.constructor = bandMember;
+
+      bandMember.prototype.greeting = function() {
+        var prefix;
+
+        if (this.gender === 'male' || this.gender === 'Male' || this.gender === 'm' || this.gender === 'M') {
+          prefix = 'Mr.';
+        } else if (this.gender === 'female' || this.gender === 'Female' || this.gender === 'f' || this.gender === 'F') {
+          prefix = 'Mrs.';
+        } else {
+          prefix = 'Mx.';
+        }
+
+        alert('Hello. My name is ' + prefix + ' ' + this.name.last + ', and I play ' + this.instrument + '.');
+      }
+
+      //practice different ways of adding subclasses or new people to person and bandMember
+      //bandMember now inherits from person
+
+      class coWorker extends Person {
+        constructor (first, last, age, gender, interests, tenure, position) {
+          super(first, last, age, gender, interests);
+
+          //specific to coWorker
+
+        this.tenure = tenure;
+        this.position = position;
+
+        }
+      }
+
+      //inherits properties defined on Person.prototype such as greeting();
+      let sleeper = new coWorker('Billy', 'Sleeper', '40', 'M', ['motorcycles', 'music'], 'three years', 'crew leader');
+
+      let manion = new bandMember('Myles', 'Manion', '29', 'm', 'drums', ['motocycles', 'music', 'natural stone', 'women'], 'six months', 'mason');
+
+      //adding subclass using class
+
+      class friend extends Person {
+        constructor(first, last, age, gender, interests) {
+          super(first, last, age, gender, interests);
+        }
+      }
+
+      let porter = new friend('Jimmy', 'Porter', '29', 'm', ['cooking', 'horticulture'], '18 years');
+
+      //adding inheritance using constructor
+
+      function Relatives(first, last, age, gender, interests, relationship, location) {
+        Person.call(this, first, last, age, gener, interests);
+      }
+
+      //inherit prototypes from Person
+
+      Relatives.prototype = Object.create(Person.prototype);
+
+
+    </script>
+  </body>
+</html>
