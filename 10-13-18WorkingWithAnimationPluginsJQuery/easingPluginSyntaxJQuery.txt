@@ -1,0 +1,15 @@
+//Example of JavaScript Syntax for using Easing plugin(plugin for different timing functions for animation)
+
+$('#bc2').animate({
+
+	top: to
+	
+	},
+ 2000,
+
+	'easeOutBounce');
+
+
+does not include wrapper function such as click handler. 'easeOutBounce represents function name in JQuery Plug-in
+
+As per usual, always add plugin as script tag in html file and make sure to research current compatability or any changes made to plug-in by author
